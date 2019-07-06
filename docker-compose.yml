@@ -1,0 +1,8 @@
+version: '2'
+services:
+  cron:
+    build: .
+    container_name: cron
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ./crontab:/tmp/crontab
