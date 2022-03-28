@@ -1,4 +1,4 @@
-FROM alpine:3.10
+FROM alpine:latest
 ENV TZ Europe/Vienna
 
 RUN apk add --no-cache tzdata
