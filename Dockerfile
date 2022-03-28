@@ -5,7 +5,7 @@ RUN apk add --no-cache tzdata
 
 # RUN apk add --no-cache docker
 RUN apk add --no-cache curl \
-    && export DOCKER_LATEST=$(curl --silent "https://download.docker.com/linux/static/stable/x86_64/" | sed -n 's/.*href="\([^"]*\).*/\1/p' | tail -n1) \
+    && export DOCKER_LATEST=$(curl --silent "https://download.docker.com/linux/static/stable/x86_64/" | sed -n 's/.*href="\(docker-[0-9][^"]*\).*/\1/p' | tail -n1) \
     && curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/${DOCKER_LATEST} \
     && tar xzvf ${DOCKER_LATEST} --strip 1 -C /usr/local/bin docker/docker \
     && rm ${DOCKER_LATEST}
