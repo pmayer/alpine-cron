@@ -1,14 +1,9 @@
 FROM alpine:latest
 ENV TZ Europe/Vienna
 
-RUN apk add --no-cache tzdata
+RUN apk add --update --no-cache tzdata
 
-# RUN apk add --no-cache docker
-RUN apk add --no-cache curl \
-    && export DOCKER_LATEST=$(curl --silent "https://download.docker.com/linux/static/stable/x86_64/" | sed -n 's/.*href="\(docker-[0-9][^"]*\).*/\1/p' | tail -n1) \
-    && curl -fsSLO https://download.docker.com/linux/static/stable/x86_64/${DOCKER_LATEST} \
-    && tar xzvf ${DOCKER_LATEST} --strip 1 -C /usr/local/bin docker/docker \
-    && rm ${DOCKER_LATEST}
+COPY --from=docker:latest /usr/local/bin/docker /usr/local/bin/docker
 
 COPY crontab /tmp/crontab
 
