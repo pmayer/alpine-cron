@@ -1,10 +1,10 @@
 set -e
 
-DOCKER_REPO=paradoxon/alpine-cron
+DOCKER_REPO=paradoxon/alpine-cron-sentry
 
-docker build --pull -t docker-cron .
+docker build --pull -t docker-cron-sentry .
 
-DOCKER_TAG=$(docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro docker-cron docker version --format '{{.Client.Version}}')
+DOCKER_TAG=$(docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro docker-cron-sentry docker version --format '{{.Client.Version}}')
 
 docker tag $(docker images -q docker-cron) ${DOCKER_REPO}:${DOCKER_TAG}
 docker tag $(docker images -q docker-cron) ${DOCKER_REPO}:latest
