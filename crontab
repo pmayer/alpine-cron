@@ -1,1 +1,1 @@
-*/2 * * * * echo "Hello Cron!" > /dev/stdout
+*/2 * * * * echo "Hello Cron!" && cat /tmp/does-not-exist > /dev/stdout || sentry-cli send-event -m "Hello Cron Error!"
