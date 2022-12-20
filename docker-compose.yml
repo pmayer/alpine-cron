@@ -3,6 +3,8 @@ services:
   cron:
     build: .
     container_name: cron
+    environment:
+      - SENTRY_DSN=${SENTRY_DSN}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./crontab:/tmp/crontab
