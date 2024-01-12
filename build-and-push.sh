@@ -1,14 +1,13 @@
 set -e
 
-DOCKER_REPO=paradoxon/alpine-cron
-
-docker build --pull -t docker-cron .
-
-DOCKER_TAG=$(docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro docker-cron docker version --format '{{.Client.Version}}')
-
-docker tag $(docker images -q docker-cron) ${DOCKER_REPO}:${DOCKER_TAG}
-docker tag $(docker images -q docker-cron) ${DOCKER_REPO}:latest
+DOCKER_IMAGE=alpine-cron
+DOCKER_REPO=paradoxon/${DOCKER_IMAGE}
+PLATFORMS=linux/amd64,linux/arm64,linux/arm/v7
 
 docker login
-docker push ${DOCKER_REPO}:${DOCKER_TAG}
-docker push ${DOCKER_REPO}:latest
+
+DOCKER_TAG=$(docker run --rm --pull always -v /var/run/docker.sock:/var/run/docker.sock:ro docker:latest docker version --format '{{.Client.Version}}')
+
+docker buildx build --platform ${PLATFORMS} --pull -t ${DOCKER_REPO}:${DOCKER_TAG} --push .
+docker buildx build --platform ${PLATFORMS} --pull -t ${DOCKER_REPO}:latest --push .
+
