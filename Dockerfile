@@ -1,5 +1,5 @@
 FROM alpine:latest
-ENV TZ Europe/Vienna
+ENV TZ=Europe/Vienna
 
 RUN apk add --update --no-cache tzdata
 
